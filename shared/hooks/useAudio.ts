@@ -13,23 +13,24 @@ const clickSoundUrls = [
 ];
 
 // Module-level cache shared across all components
-const clickAudioCache = new Map<string, HTMLAudioElement>();
+const audioCache = new Map<string, HTMLAudioElement>();
 
 // Lazy audio loader with caching
 const useAudioLoader = (url: string, volume: number = 1) => {
   const silentMode = usePreferencesStore(state => state.silentMode);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const play = useCallback(() => {
     if (silentMode) return;
 
-    if (!audioRef.current) {
-      audioRef.current = new Audio(url);
-      audioRef.current.volume = volume;
+    let audio = audioCache.get(url);
+    if (!audio) {
+      audio = new Audio(url);
+      audio.volume = volume;
+      audioCache.set(url, audio);
     }
 
-    audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {
+    audio.currentTime = 0;
+    audio.play().catch(() => {
       // Ignore autoplay errors
     });
   }, [url, volume, silentMode]);
@@ -45,11 +46,11 @@ export const useClick = () => {
 
     const url = clickSoundUrls[random.integer(0, clickSoundUrls.length - 1)];
 
-    let audio = clickAudioCache.get(url);
+    let audio = audioCache.get(url);
     if (!audio) {
       audio = new Audio(url);
       audio.volume = 1;
-      clickAudioCache.set(url, audio);
+      audioCache.set(url, audio);
     }
 
     audio.currentTime = 0;
