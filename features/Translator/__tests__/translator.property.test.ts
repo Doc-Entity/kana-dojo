@@ -13,6 +13,7 @@ import {
   clearAll
 } from '../services/historyService';
 import { ERROR_CODES, getErrorMessage } from '../services/translationAPI';
+import useTranslatorStore from '../store/useTranslatorStore';
 
 // Arbitrary for Language type
 const languageArb = fc.constantFrom<Language>('en', 'ja');
@@ -359,5 +360,190 @@ describe('Property 11: API errors show messages', () => {
       }),
       { numRuns: 100 }
     );
+  });
+});
+
+describe('Translator Store Property Tests', () => {
+  // Reset store state before each test
+  beforeEach(() => {
+    useTranslatorStore.setState({
+      sourceText: '',
+      sourceLanguage: 'en',
+      targetLanguage: 'ja',
+      translatedText: '',
+      romanization: null,
+      isLoading: false,
+      error: null,
+      isOffline: false,
+      history: []
+    });
+  });
+
+  /**
+   * **Feature: japanese-translator, Property 3: Swap preserves content**
+   * For any translator state with source text and translated text, swapping languages
+   * should exchange the source and target languages AND swap the source text with the translated text.
+   * **Validates: Requirements 2.3**
+   */
+  describe('Property 3: Swap preserves content', () => {
+    it('swapping languages exchanges source/target languages and text', () => {
+      fc.assert(
+        fc.property(
+          fc.string({ minLength: 0, maxLength: 100 }),
+          fc.string({ minLength: 0, maxLength: 100 }),
+          languageArb,
+          (
+            sourceText: string,
+            translatedText: string,
+            sourceLang: Language
+          ) => {
+            const targetLang = getOppositeLanguage(sourceLang);
+
+            // Set initial state
+            useTranslatorStore.setState({
+              sourceText,
+              translatedText,
+              sourceLanguage: sourceLang,
+              targetLanguage: targetLang
+            });
+
+            // Perform swap
+            useTranslatorStore.getState().swapLanguages();
+
+            // Get new state
+            const state = useTranslatorStore.getState();
+
+            // Languages should be swapped
+            expect(state.sourceLanguage).toBe(targetLang);
+            expect(state.targetLanguage).toBe(sourceLang);
+
+            // Text should be swapped
+            expect(state.sourceText).toBe(translatedText);
+            expect(state.translatedText).toBe(sourceText);
+          }
+        ),
+        { numRuns: 100 }
+      );
+    });
+
+    it('double swap returns to original state', () => {
+      fc.assert(
+        fc.property(
+          fc.string({ minLength: 0, maxLength: 100 }),
+          fc.string({ minLength: 0, maxLength: 100 }),
+          languageArb,
+          (
+            sourceText: string,
+            translatedText: string,
+            sourceLang: Language
+          ) => {
+            const targetLang = getOppositeLanguage(sourceLang);
+
+            // Set initial state
+            useTranslatorStore.setState({
+              sourceText,
+              translatedText,
+              sourceLanguage: sourceLang,
+              targetLanguage: targetLang
+            });
+
+            // Perform double swap
+            useTranslatorStore.getState().swapLanguages();
+            useTranslatorStore.getState().swapLanguages();
+
+            // Get new state
+            const state = useTranslatorStore.getState();
+
+            // Should return to original
+            expect(state.sourceLanguage).toBe(sourceLang);
+            expect(state.targetLanguage).toBe(targetLang);
+            expect(state.sourceText).toBe(sourceText);
+            expect(state.translatedText).toBe(translatedText);
+          }
+        ),
+        { numRuns: 100 }
+      );
+    });
+  });
+
+  /**
+   * **Feature: japanese-translator, Property 9: Clear button empties fields**
+   * For any state with non-empty sourceText or translatedText, calling clearInput
+   * should result in both fields being empty strings.
+   * **Validates: Requirements 4.2**
+   */
+  describe('Property 9: Clear button empties fields', () => {
+    it('clearInput empties sourceText and translatedText', () => {
+      fc.assert(
+        fc.property(
+          fc.string({ minLength: 0, maxLength: 100 }),
+          fc.string({ minLength: 0, maxLength: 100 }),
+          fc.option(fc.string({ minLength: 1, maxLength: 50 }), { nil: null }),
+          (
+            sourceText: string,
+            translatedText: string,
+            romanization: string | null
+          ) => {
+            // Set initial state with some content
+            useTranslatorStore.setState({
+              sourceText,
+              translatedText,
+              romanization
+            });
+
+            // Call clearInput
+            useTranslatorStore.getState().clearInput();
+
+            // Get new state
+            const state = useTranslatorStore.getState();
+
+            // Both fields should be empty
+            expect(state.sourceText).toBe('');
+            expect(state.translatedText).toBe('');
+            expect(state.romanization).toBeNull();
+            expect(state.error).toBeNull();
+          }
+        ),
+        { numRuns: 100 }
+      );
+    });
+  });
+
+  /**
+   * **Feature: japanese-translator, Property 6: History click restores state**
+   * For any history entry, selecting it should set the sourceText to the entry's sourceText
+   * and translatedText to the entry's translatedText.
+   * **Validates: Requirements 3.3**
+   */
+  describe('Property 6: History click restores state', () => {
+    it('restoreFromHistory sets state from entry', () => {
+      fc.assert(
+        fc.property(translationEntryArb, (entry: TranslationEntry) => {
+          // Start with different state
+          useTranslatorStore.setState({
+            sourceText: 'different text',
+            translatedText: 'different translation',
+            sourceLanguage: entry.sourceLanguage === 'en' ? 'ja' : 'en',
+            targetLanguage: entry.targetLanguage === 'en' ? 'ja' : 'en',
+            romanization: null
+          });
+
+          // Restore from history entry
+          useTranslatorStore.getState().restoreFromHistory(entry);
+
+          // Get new state
+          const state = useTranslatorStore.getState();
+
+          // State should match entry
+          expect(state.sourceText).toBe(entry.sourceText);
+          expect(state.translatedText).toBe(entry.translatedText);
+          expect(state.sourceLanguage).toBe(entry.sourceLanguage);
+          expect(state.targetLanguage).toBe(entry.targetLanguage);
+          expect(state.romanization).toBe(entry.romanization || null);
+          expect(state.error).toBeNull();
+        }),
+        { numRuns: 100 }
+      );
+    });
   });
 });

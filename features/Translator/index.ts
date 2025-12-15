@@ -8,8 +8,8 @@ export * from './types';
 export * from './services/historyService';
 export * from './services/translationAPI';
 
-// Store (to be implemented)
-// export { default as useTranslatorStore } from './store/useTranslatorStore';
+// Store
+export { default as useTranslatorStore } from './store/useTranslatorStore';
 
 // Components (to be implemented)
 // export { default as TranslatorPage } from './components/TranslatorPage';
