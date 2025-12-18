@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import {
   Heart,
   HeartCrack,
   X,
   Flame,
-  CircleCheck,
-  CircleX,
   SquareCheck,
   SquareX,
   MousePointerClick,
@@ -63,7 +61,7 @@ interface ActiveGameProps<T> {
   ) => React.ReactNode;
   items: T[];
 
-  // Feedback
+  // Feedback (kept for API compatibility but no longer displayed)
   lastAnswerCorrect: boolean | null;
   currentStreak: number;
   correctSinceLastRegen: number;
@@ -107,13 +105,13 @@ export default function ActiveGame<T>({
   userAnswer,
   setUserAnswer,
   onSubmit,
-  getCorrectAnswer,
+  getCorrectAnswer: _getCorrectAnswer,
   shuffledOptions,
   wrongSelectedAnswers,
   onOptionClick,
   renderOption,
   items,
-  lastAnswerCorrect,
+  lastAnswerCorrect: _lastAnswerCorrect,
   currentStreak,
   correctSinceLastRegen,
   regenThreshold,
@@ -126,37 +124,6 @@ export default function ActiveGame<T>({
 
   const progressPercent = Math.round((currentIndex / totalQuestions) * 100);
   const canRegenerate = DIFFICULTY_CONFIG[difficulty].regenerates;
-
-  // Feedback elements - matching GameIntel style
-  const feedback = useMemo(() => {
-    if (lastAnswerCorrect === true) {
-      return (
-        <>
-          <span>Correct </span>
-          <CircleCheck className='inline text-[var(--main-color)]' />
-        </>
-      );
-    }
-    if (lastAnswerCorrect === false && currentQuestion) {
-      return (
-        <>
-          <span>
-            {gameMode === 'Pick'
-              ? 'Try again '
-              : `It was "${getCorrectAnswer(currentQuestion, isReverseActive)}" `}
-          </span>
-          <CircleX className='inline text-[var(--main-color)]' />
-        </>
-      );
-    }
-    return null;
-  }, [
-    lastAnswerCorrect,
-    currentQuestion,
-    gameMode,
-    getCorrectAnswer,
-    isReverseActive
-  ]);
 
   // Focus input for Type mode
   useEffect(() => {
@@ -291,22 +258,7 @@ export default function ActiveGame<T>({
       </div>
 
       {/* Main game area - centered with proper spacing */}
-      <div className='flex w-full flex-1 flex-col items-center gap-4 sm:w-4/5 sm:gap-10'>
-        {/* Feedback - matching GameIntel style */}
-        <div
-          className={clsx(
-            'flex flex-col',
-            cardBorderStyles,
-            'text-[var(--secondary-color)]'
-          )}
-        >
-          {feedback && (
-            <p className='flex w-full items-center justify-center gap-1.5 border-[var(--border-color)] px-4 py-3 text-xl'>
-              {feedback}
-            </p>
-          )}
-        </div>
-
+      <div className='flex w-full flex-1 flex-col items-center gap-8 sm:w-4/5 sm:gap-10'>
         {/* Question Display - matching Classic game layout */}
         <div className='flex flex-row items-center justify-center gap-1'>
           <p className='text-8xl font-medium sm:text-9xl'>
