@@ -13,6 +13,12 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 import { useClick } from '@/shared/hooks/useAudio';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Experiments - Explore Alternative Learning Methods',
+  description: 'Explore experimental features and alternative learning methods for Japanese.'
+};
 
 const experiments = [
   {

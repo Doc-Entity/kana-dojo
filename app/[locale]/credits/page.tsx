@@ -1,14 +1,10 @@
 import Credits from '@/features/Legal/credits/Credits';
 import { Metadata } from 'next';
+import { generatePageMetadata } from '@/core/i18n/metadata-helpers';
 
-export const metadata: Metadata = {
-  title: 'Credits - Contributors & Supporters',
-  description:
-    'Recognizing the contributors, supporters, and community members who help make KanaDojo possible. See the people behind our Japanese learning platform.',
-  alternates: {
-    canonical: 'https://kanadojo.com/credits'
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return await generatePageMetadata('credits');
+}
 
 export default function CreditsRoute() {
   return <Credits />;

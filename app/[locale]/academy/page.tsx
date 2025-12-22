@@ -2,26 +2,15 @@ import type { Metadata } from 'next';
 import { getBlogPosts, BlogList } from '@/features/Blog';
 import { routing, type Locale } from '@/core/i18n/routing';
 import SidebarLayout from '@/shared/components/layout/SidebarLayout';
+import { generatePageMetadata } from '@/core/i18n/metadata-helpers';
 
 export function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  title: 'Academy - Japanese Learning Articles | KanaDojo',
-  description:
-    'Explore our collection of Japanese learning articles covering Hiragana, Katakana, Kanji, vocabulary, grammar, and Japanese culture. Free educational content for all levels.',
-  openGraph: {
-    title: 'Academy - Japanese Learning Articles | KanaDojo',
-    description:
-      'Explore our collection of Japanese learning articles covering Hiragana, Katakana, Kanji, vocabulary, grammar, and Japanese culture.',
-    url: 'https://kanadojo.com/academy',
-    type: 'website'
-  },
-  alternates: {
-    canonical: 'https://kanadojo.com/academy'
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return await generatePageMetadata('academy');
+}
 
 interface AcademyPageProps {
   params: Promise<{ locale: string }>;

@@ -15,6 +15,7 @@ import {
   Dice5
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import useOnboardingStore from '@/shared/store/useOnboardingStore';
 import usePreferencesStore from '@/features/Preferences/store/usePreferencesStore';
 import { useClick } from '@/shared/hooks/useAudio';
@@ -23,6 +24,7 @@ import themeSets from '@/features/Preferences/data/themes';
 import { modalFonts } from '@/shared/components/Modals/data/modalFonts';
 
 const WelcomeModal = () => {
+  const t = useTranslations('welcome');
   const { playClick } = useClick();
   const pathname = usePathname();
   const contentRef = useRef<HTMLDivElement>(null);
@@ -134,10 +136,10 @@ const WelcomeModal = () => {
                 id='welcome-modal-title'
                 className='text-3xl font-bold text-[var(--main-color)]'
               >
-                Welcome to KanaDojo!
+                {t('title')}
               </h2>
               <p className='text-lg text-[var(--secondary-color)]'>
-                Let&apos;s personalize your learning experience
+                {t('subtitle')}
               </p>
             </div>
 
@@ -149,10 +151,10 @@ const WelcomeModal = () => {
                 />
                 <div>
                   <h3 className='font-semibold text-[var(--main-color)]'>
-                    Configure Behavior
+                    {t('features.behavior.title')}
                   </h3>
                   <p className='text-sm text-[var(--secondary-color)]'>
-                    Set display language and sound preferences
+                    {t('features.behavior.description')}
                   </p>
                 </div>
               </div>
@@ -164,10 +166,10 @@ const WelcomeModal = () => {
                 />
                 <div>
                   <h3 className='font-semibold text-[var(--main-color)]'>
-                    Choose Your Theme
+                    {t('features.theme.title')}
                   </h3>
                   <p className='text-sm text-[var(--secondary-color)]'>
-                    Select a theme that matches your style
+                    {t('features.theme.description')}
                   </p>
                 </div>
               </div>
@@ -179,10 +181,10 @@ const WelcomeModal = () => {
                 />
                 <div>
                   <h3 className='font-semibold text-[var(--main-color)]'>
-                    Select Your Font
+                    {t('features.font.title')}
                   </h3>
                   <p className='text-sm text-[var(--secondary-color)]'>
-                    Choose your perfect font for characters
+                    {t('features.font.description')}
                   </p>
                 </div>
               </div>
@@ -196,20 +198,20 @@ const WelcomeModal = () => {
             <div className='space-y-2 text-center'>
               <h2 className='flex items-center justify-center gap-2 text-2xl font-bold text-[var(--main-color)]'>
                 <Joystick size={28} />
-                Configure Behavior
+                {t('steps.behavior.title')}
               </h2>
               <p className='text-[var(--secondary-color)]'>
-                Set your display and sound preferences
+                {t('steps.behavior.subtitle')}
               </p>
             </div>
 
             <div className='space-y-6'>
               <div className='space-y-3'>
                 <h3 className='text-lg font-semibold text-[var(--main-color)]'>
-                  Display Language
+                  {t('steps.behavior.displayLanguage.title')}
                 </h3>
                 <p className='text-sm text-[var(--secondary-color)]'>
-                  In the character selection menu, for readings, display:
+                  {t('steps.behavior.displayLanguage.description')}
                 </p>
                 <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
                   <button
@@ -231,7 +233,7 @@ const WelcomeModal = () => {
                         {!localDisplayKana && '● '}
                       </span>
                       <span className='font-medium'>
-                        Romaji, Translations 🇺🇸
+                        {t('steps.behavior.displayLanguage.romaji')}
                       </span>
                     </div>
                   </button>
@@ -254,7 +256,7 @@ const WelcomeModal = () => {
                       <span className='text-[var(--main-color)]'>
                         {localDisplayKana && '● '}
                       </span>
-                      <span className='font-medium'>Kana, Kanji 🇯🇵</span>
+                      <span className='font-medium'>{t('steps.behavior.displayLanguage.kana')}</span>
                     </div>
                   </button>
                 </div>
@@ -262,10 +264,10 @@ const WelcomeModal = () => {
 
               <div className='space-y-3'>
                 <h3 className='text-lg font-semibold text-[var(--main-color)]'>
-                  Sound Effects
+                  {t('steps.behavior.soundEffects.title')}
                 </h3>
                 <p className='text-sm text-[var(--secondary-color)]'>
-                  Play UI and feedback sound effects:
+                  {t('steps.behavior.soundEffects.description')}
                 </p>
                 <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
                   <button
@@ -286,7 +288,7 @@ const WelcomeModal = () => {
                       <span className='text-[var(--main-color)]'>
                         {!localSilentMode && '● '}
                       </span>
-                      <span className='font-medium'>On</span>
+                      <span className='font-medium'>{t('steps.behavior.soundEffects.on')}</span>
                       <AudioLines size={20} />
                     </div>
                   </button>
@@ -309,7 +311,7 @@ const WelcomeModal = () => {
                       <span className='text-[var(--main-color)]'>
                         {localSilentMode && '● '}
                       </span>
-                      <span className='font-medium'>Off</span>
+                      <span className='font-medium'>{t('steps.behavior.soundEffects.off')}</span>
                       <VolumeX size={20} />
                     </div>
                   </button>
@@ -325,10 +327,10 @@ const WelcomeModal = () => {
             <div className='space-y-2 text-center'>
               <h2 className='flex items-center justify-center gap-2 text-2xl font-bold text-[var(--main-color)]'>
                 <Palette size={28} />
-                Choose Your Theme
+                {t('steps.themes.title')}
               </h2>
               <p className='text-[var(--secondary-color)]'>
-                Select a theme that matches your style
+                {t('steps.themes.subtitle')}
               </p>
             </div>
 
@@ -353,7 +355,7 @@ const WelcomeModal = () => {
                 }}
               >
                 <Dice5 className='text-[var(--secondary-color)]' />
-                Random Theme
+                {t('steps.themes.randomTheme')}
               </button>
             </div>
 
@@ -411,10 +413,10 @@ const WelcomeModal = () => {
             <div className='space-y-2 text-center'>
               <h2 className='flex items-center justify-center gap-2 text-2xl font-bold text-[var(--main-color)]'>
                 <Type size={28} />
-                Choose Your Font
+                {t('steps.fonts.title')}
               </h2>
               <p className='text-[var(--secondary-color)]'>
-                Choose the perfect font for characters
+                {t('steps.fonts.subtitle')}
               </p>
             </div>
 
@@ -435,7 +437,7 @@ const WelcomeModal = () => {
                 }}
               >
                 <Dice5 className='text-[var(--secondary-color)]' />
-                Random Font
+                {t('steps.fonts.randomFont')}
               </button>
             </div>
 
@@ -461,7 +463,7 @@ const WelcomeModal = () => {
                       <span className='text-sm font-medium text-[var(--main-color)]'>
                         {localFont === fontObj.name && '● '}
                         {fontObj.name}
-                        {fontObj.name === 'Zen Maru Gothic' && ' (default)'}
+                        {fontObj.name === 'Zen Maru Gothic' && ` ${t('steps.fonts.default')}`}
                       </span>
                     </div>
                     <div className='text-lg text-[var(--secondary-color)]'>
@@ -472,7 +474,7 @@ const WelcomeModal = () => {
               ))}
               <div className='mt-4 rounded-lg bg-[var(--background-color)] p-3 text-center'>
                 <p className='text-sm text-[var(--secondary-color)]'>
-                  💡 More fonts available in <strong>Preferences</strong>
+                  {t('steps.fonts.moreInfo')} <strong>{t('steps.fonts.preferences')}</strong>
                 </p>
               </div>
             </div>
@@ -484,19 +486,19 @@ const WelcomeModal = () => {
           <div className='space-y-6 text-center'>
             <div className='space-y-2'>
               <h2 className='text-3xl font-bold text-[var(--main-color)]'>
-                All Set!
+                {t('steps.complete.title')}
               </h2>
               <p className='text-lg text-[var(--secondary-color)]'>
-                Your KanaDojo is now personalized
+                {t('steps.complete.subtitle')}
               </p>
             </div>
 
             <div className='space-y-4'>
               <p className='text-[var(--secondary-color)]'>
-                You can always change these settings later in the Preferences.
+                {t('steps.complete.canChange')}
               </p>
               <p className='text-sm text-[var(--secondary-color)]'>
-                Happy learning!
+                {t('steps.complete.happyLearning')}
               </p>
             </div>
           </div>
@@ -618,8 +620,8 @@ const WelcomeModal = () => {
                       size={16}
                       className='sm:h-[18px] sm:w-[18px]'
                     />
-                    <span className='hidden sm:inline'>Previous</span>
-                    <span className='sm:hidden'>Back</span>
+                    <span className='hidden sm:inline'>{t('navigation.previous')}</span>
+                    <span className='sm:hidden'>{t('navigation.back')}</span>
                   </button>
                 ) : (
                   <div />
@@ -636,10 +638,10 @@ const WelcomeModal = () => {
                 >
                   <span>
                     {step === 'welcome'
-                      ? 'Get Started'
+                      ? t('navigation.getStarted')
                       : step === 'fonts'
-                        ? 'Finish Setup'
-                        : 'Next'}
+                        ? t('navigation.finishSetup')
+                        : t('navigation.next')}
                   </span>
                   <ChevronRight size={16} className='sm:h-[18px] sm:w-[18px]' />
                 </button>

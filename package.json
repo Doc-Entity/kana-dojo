@@ -14,7 +14,6 @@
     "format:check": "prettier --check .",
     "clean": "rimraf .next tsconfig.tsbuildinfo",
     "clean:all": "rimraf .next tsconfig.tsbuildinfo node_modules/.cache",
-    "prepare": "husky",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "i18n:validate": "node scripts/i18n/validate-translations.js",
     "i18n:generate-types": "node scripts/i18n/generate-types.js",
@@ -24,15 +23,6 @@
     "analyze": "ANALYZE=true npm run build"
   },
   "type": "module",
-  "lint-staged": {
-    "**/*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "**/*.{js,jsx,json,css,scss,md,yml,yaml}": [
-      "prettier --write"
-    ]
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -86,9 +76,7 @@
     "eslint-config-next": "15.5.7",
     "eslint-formatter-pretty": "^4.1.0",
     "fast-check": "^4.3.0",
-    "husky": "^9.1.7",
     "jsdom": "^27.0.1",
-    "lint-staged": "^16.1.6",
     "postcss": "^8.5.3",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.2",

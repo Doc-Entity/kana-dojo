@@ -15,7 +15,13 @@ const NAMESPACES = [
   'statistics',
   'settings',
   'errors',
-  'menuInfo'
+  'menuInfo',
+  'blog',
+  'translator',
+  'metadata',
+  'welcome',
+  'experiments',
+  'legal'
 ] as const;
 
 // Cache for loaded messages to avoid re-importing in dev
@@ -25,7 +31,7 @@ export default getRequestConfig(async ({ locale }) => {
   // Ensure locale is always defined and valid
   const validLocale =
     locale &&
-    routing.locales.includes(locale as (typeof routing.locales)[number])
+      routing.locales.includes(locale as (typeof routing.locales)[number])
       ? locale
       : routing.defaultLocale;
 
