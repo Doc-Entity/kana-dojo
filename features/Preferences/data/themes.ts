@@ -547,6 +547,12 @@ const baseThemeSets: BaseThemeGroup[] = [
         secondaryColor: 'oklch(71.36% 0.1484 265.31 / 1)'
       },
       {
+        id: 'yugenzakura',
+        backgroundColor: 'oklch(22.5% 0.053 320.0 / 1)',
+        mainColor: 'oklch(88.0% 0.198 135.0 / 1)',
+        secondaryColor: 'oklch(90.5% 0.205 220.0 / 1)'
+      },
+      {
         id: 'fathom-frost',
         backgroundColor: 'oklch(22.55% 0.0320 232.35 / 1)',
         mainColor: 'oklch(83.21% 0.2489 143.51 / 1)',
