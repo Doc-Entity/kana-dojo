@@ -23,6 +23,10 @@ fi
 # Patterns to ignore (won't trigger a build)
 IGNORE_PATTERNS=(
   "\.[mM][dD]([xX])?$"
+  "^LICENSE\\.md$"
+  "^SECURITY\\.md$"
+  "^CONTRIBUTING\\.md$"
+  "^CODE_OF_CONDUCT\\.md$"
   "^docs/"
   "^scripts/"
   "^\.agent/"
@@ -41,7 +45,8 @@ IGNORE_PATTERNS=(
   "^\.claudeignore$"
   "^eslint\.config\.mjs$"
   "^vitest\.config\.ts$"
-  "^features/Preferences/data/themes\.ts$"
+  "^features/Preferences/data/themes\\.ts$"
+  "^public/japan-facts\\.json$"
   "\.test\.(ts|tsx)$"
   "\.spec\.(ts|tsx)$"
 )
