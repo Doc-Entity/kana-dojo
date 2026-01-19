@@ -242,6 +242,12 @@ const baseThemeSets: BaseThemeGroup[] = [
     icon: Moon,
     themes: [
       {
+      id: 'crane-flight',
+      backgroundColor: 'oklch(94.0% 0.015 240.0 / 1)',
+      mainColor: 'oklch(40.0% 0.025 270.0 / 1)',
+      secondaryColor: 'oklch(60.0% 0.175 20.0 / 1)'
+      },
+      {
         id: 'samurai-steel',
         backgroundColor: 'oklch(18.0% 0.022 250.0 / 1)',
         mainColor: 'oklch(80.0% 0.055 240.0 / 1)',
