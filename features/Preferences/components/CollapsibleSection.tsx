@@ -87,9 +87,10 @@ const CollapsibleSection = ({
         <ChevronUp
           className={clsx(
             'transition-transform duration-300 ease-out',
-            'text-[var(--border-color)]',
-            'max-md:group-active:text-[var(--secondary-color)]',
-            'md:group-hover:text-[var(--secondary-color)]',
+            'transition-colors delay-200 duration-300',
+            'text-[var(--secondary-color)]',
+            'max-md:group-active:text-[var(--main-color)]',
+            'md:group-hover:text-[var(--main-color)]',
             !isOpen && 'rotate-180',
           )}
           size={styles.chevronSize}
