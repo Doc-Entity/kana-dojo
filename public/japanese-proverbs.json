@@ -12,10 +12,10 @@
   "meaning": "Learn from others' behavior"
   },
   {
-  "japanese": "井戸端会議",
-  "romaji": "Idobata kaigi",
-  "english": "Well-side conference",
-  "meaning": "Neighborhood gossip"
+    "japanese": "井戸端会議",
+    "romaji": "Idobata kaigi",
+    "english": "Well-side conference",
+    "meaning": "Neighborhood gossip"
   },
   {
     "japanese": "善は急げ",
@@ -402,9 +402,15 @@
     "meaning": "A lucky break that comes from an error"
   },
   {
-  "japanese": "負けるが勝ち",
-  "romaji": "Makeru ga kachi",
-  "english": "Sometimes losing is winning",
-  "meaning": "Conceding can be the best outcome"
-}
+    "japanese": "負けるが勝ち",
+    "romaji": "Makeru ga kachi",
+    "english": "Sometimes losing is winning",
+    "meaning": "Conceding can be the best outcome"
+  },
+  {
+    "japanese": "雨降って地固まる",
+    "romaji": "Ame futte ji katamaru",
+    "english": "After the rain, the ground hardens",
+    "meaning": "Hard times make relationships stronger"
+  }
 ]
